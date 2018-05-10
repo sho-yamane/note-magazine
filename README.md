@@ -1,1 +1,1 @@
-# note-magazine
+# noteのmagazine用の
