@@ -1,4 +1,4 @@
-## noteのmagazine用のrepositories
+## noteのmagazine用のrepository
 
 ### magazineのurl
 
