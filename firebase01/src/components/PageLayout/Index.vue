@@ -48,26 +48,15 @@ export default {
   methods: {
     // 新規アカウント登録 or ログイン
     signIn () {
-      // 今回はGoogle Oauthの場合
+      // 今回はGoogleの場合
       const provider = new firebase.auth.GoogleAuthProvider()
       // Facebookの場合は
       // const provider = new firebase.auth.FacebookAuthProvider()
       // Twitterの場合は
       // const provider = new firebase.auth.TwitterAuthProvider()
 
-      // ポップアップ型のサインイン画面を出す
-      firebase.auth().signInWithPopup(provider).then(result => {
-        // ログイン成功
-        const user = result.user
-        // ログイン状態をtrueにする
-        this.oauth.login = true
-        // ユーザー情報を保持する
-        this.user.displayName = user.displayName // 名前
-        this.user.photoURL = user.photoURL // アイコン画像のURL
-      }).catch(error => {
-        // エラーの場合
-        alert(error)
-      })
+      // リダイレクト型のサインイン画面を出す
+      firebase.auth().signInWithRedirect(provider)
     },
     // ログアウト
     signOut () {
