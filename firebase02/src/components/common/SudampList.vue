@@ -1,15 +1,22 @@
 <template lang="pug">
   .SudampList
+    // gettersで取得したvotesでfor文をまわす
     .SudampList_Elem(v-for="(vote, key) in votes" :key="key")
+      // +1をしているのはidが0-23だが見せ方の番号1-24のため
       .SudampList_ElemNo {{key + 1}}
+      // 画像のURL
       img(:src="`/static/sudamp/line_sudamp_01_${key}-1.jpg`")
       .SudampList_VoteNum
+        // 投票数をだす
         span(:id="`js-voteNum-${key}`") {{vote.num}}
         span.SudampList_VoteNumUnit 票
+      // 投票ステータスがtrueで投票済の場合
       button.SudampList_VoteBtn._disable(v-if="$store.state.vote.status")
         span(v-if="$store.state.vote.id === key") 本日投票済
         span(v-else) -
+      // 投票していなくてログインしている場合
       button.SudampList_VoteBtn._active(v-else-if="!$store.state.vote.status && $store.state.oauth.login" @click="postVote({voteId: key, uid: $store.state.user.uid})") 投票する
+      // 投票していなくてログインしていない場合
       button.SudampList_VoteBtn._login(v-else-if="!$store.state.vote.status && !$store.state.oauth.login" @click="signIn") ログインして投票
 </template>
 
@@ -22,9 +29,12 @@ export default {
     }
   },
   computed: {
+    // computedにしているのはFirebaseがリアルタイム同期なので都度ブラウザにもその情報が反映されるように
     ...mapGetters(['votes'])
   },
   mounted () {
+    // Firebaseのvotesテーブルから情報を取得。
+    // その後、mutationsでそのデータがstateのvotesに入れるから↑のcomputedのvotesに反映される。それをv-forで回す
     this.fetchVotesData()
   },
   methods: {

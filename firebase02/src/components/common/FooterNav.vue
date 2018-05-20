@@ -20,7 +20,9 @@
         button.Nav_Btn(v-else @click="signOut")
           icon(name="sign-out-alt")
           span ログアウト
+    // 下からシュッとでてくるやつ
     .Nav_Content(:class="{_active: contentDisplay}")
+      // aboutをクリックした場合
       .Nav_ContentInner._about(v-if="navClickContent === 'about'")
         p
           | Vue.jsとFirebaseで構築したサンプルサイトです。
@@ -29,6 +31,7 @@
           | 素材は
           a(href="https://twitter.com/sudarexyz") 茨城県の元気なラジオ屋さん
           |にお借りました。
+      // historyをクリックした場合
       .Nav_ContentInner._history(v-if="navClickContent === 'history'")
         p 準備中
 </template>
@@ -40,11 +43,14 @@ export default {
   name: 'FooterNav',
   data () {
     return {
+      // 下からシュッとでてくるやつを出すかどうか
       contentDisplay: false,
+      // どこをクリックしたか
       navClickContent: null
     }
   },
   methods: {
+    // actions参照
     ...mapActions(['signIn', 'signOut']),
     clickNav (type) {
       if (!this.contentDisplay) {

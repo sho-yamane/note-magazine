@@ -5,8 +5,11 @@
       br
       | 最強のスダンプに投票しよう
     .Description_btns
+      // LINEストさへのリンク
       a.Description_btn._line(href="https://store.line.me/stickershop/product/1357769" target="_blank") スダンプを買う
+      // ログインしてなかったらログインボタン
       button.Description_btn._login(v-if="!$store.state.oauth.login" @click="signIn") ログイン
+      // ログインしてたらログアウトボタン
       button.Description_btn._logout(v-else @click="signOut") ログアウト
 </template>
 
@@ -15,6 +18,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'Description',
   methods: {
+    // actions参照
     ...mapActions(['signIn', 'signOut'])
   }
 }

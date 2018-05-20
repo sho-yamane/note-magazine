@@ -1,5 +1,7 @@
 <template lang="pug">
+  // 投票すると$store.state.modal.shareをtrueにするので._activeがaddされる
   .ModalShare(:class="{_active: $store.state.modal.share}")
+    // maskとcloseボタンどっちクリックしても閉じるようにする
     .ModalShare_Mask(@click="clickClose")
     .ModalShare_Close(@click="clickClose")
       icon(name="times")
@@ -11,6 +13,7 @@
           br
           | あなたの推しスダンプを広めよう
       .ModalShare_Share
+        // $store.state.vote.id + 1をしているのはidが0-23だが見せ方の番号1-24のため
         a(target="_blank" :href="`https://twitter.com/share?url=${shareUrl}&text=${$store.state.vote.id + 1}番のスダンプに投票しました！今最強のスダンプが決まる！スダンプ人気投票サイト`")
           icon(name="brands/twitter")
           span ツイートする
@@ -26,6 +29,8 @@ export default {
   },
   methods: {
     clickClose () {
+      // mutations参照
+      // $store.state.modal.shareをfalseにする
       this.$store.commit('UPDATE_MODALSHERE', false)
     }
   }

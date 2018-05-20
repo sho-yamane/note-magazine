@@ -11,21 +11,15 @@
     transition(name="fade02")
       // loginCheck()が終了したら表示
       .Container(v-if="!$store.state.loading")
+        // ヘッダー
         global-header
+        // ヘッダー下のリンクとログインボタン
         description
-        // ログインしている場合はユーザー情報表示
-        // .User(v-if="oauth.login")
-          // 画像
-          img.User_Img(:src="user.photoURL" :alt="user.displayName")
-          // 名前
-          .User_Name {{user.displayName}}
-          // ログアウトボタン
-          button.Btn._signOut(@click="signOut") ログアウト
-        // ログインしていない場合はログインボタン表示
-        // .Login(v-else)
-          button.Btn._signIn(@click="signIn") ソーシャルログイン
+        // スダンプリスト
         sudamp-list
+        // フッターの追尾ナビ
         footer-nav
+        // 投票したらTwitterにシェアをサジェストするやつ
         modal-share
 </template>
 
