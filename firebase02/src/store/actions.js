@@ -77,10 +77,13 @@ export default {
       }
     })
   },
-  postVote ({ commit }, {voteId, uid}) {
+  async postVote ({ commit }, {voteId, uid}) {
     const db = firebase.database()
     const voteRef = db.ref('votes')
-    const nowVote = parseInt(document.getElementById('js-voteNum-' + voteId).innerText)
+    // const nowVote = parseInt(document.getElementById('js-voteNum-' + voteId).innerText)
+    console.log(await this.dispatch('checkVoteNum', voteId))
+    const nowVote = await this.dispatch('checkVoteNum', voteId)
+    // console.log(this.dispatch('checkVoteNum', voteId))
     const today = new Date()
 
     // +1投票
@@ -98,5 +101,14 @@ export default {
     userCheckRef.update(userArr)
     // モーダルでシェアボタン表示
     commit('UPDATE_MODALSHERE', true)
+  },
+  checkVoteNum ({commit}, voteId) {
+    return new Promise(resolve => {
+      const db = firebase.database()
+      const votesRef = db.ref('votes/' + voteId)
+      votesRef.on('value', snapshot => {
+        resolve(snapshot.val().num)
+      })
+    })
   }
 }
