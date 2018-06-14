@@ -13,8 +13,8 @@
           br
           | あなたの推しスダンプを広めよう
       .ModalShare_Share
-        // $store.state.vote.id + 1をしているのはidが0-23だが見せ方の番号1-24のため
-        a(target="_blank" :href="`https://twitter.com/share?url=${shareUrl}&text=${$store.state.vote.id + 1}番のスダンプに投票しました！今最強のスダンプが決まる！スダンプ人気投票サイト`")
+        // vote.id + 1をしているのはidが0-23だが見せ方の番号1-24のため
+        a(target="_blank" :href="`https://twitter.com/share?url=${shareUrl}&text=${vote.id + 1}番のスダンプに投票しました！今最強のスダンプが決まる！スダンプ人気投票サイト`")
           icon(name="brands/twitter")
           span ツイートする
 </template>
@@ -29,7 +29,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['modal'])
+    ...mapGetters(['modal', 'vote'])
   },
   methods: {
     clickClose () {

@@ -80,10 +80,7 @@ export default {
   async postVote ({ commit }, {voteId, uid}) {
     const db = firebase.database()
     const voteRef = db.ref('votes')
-    // const nowVote = parseInt(document.getElementById('js-voteNum-' + voteId).innerText)
-    console.log(await this.dispatch('checkVoteNum', voteId))
     const nowVote = await this.dispatch('checkVoteNum', voteId)
-    // console.log(this.dispatch('checkVoteNum', voteId))
     const today = new Date()
 
     // +1投票
