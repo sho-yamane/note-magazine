@@ -14,7 +14,7 @@
           icon(name="history")
           span 投票履歴
       li.Nav_List._loginout
-        button.Nav_Btn(v-if="!$store.state.oauth.login" @click="signIn")
+        button.Nav_Btn(v-if="!oauth.login" @click="signIn")
           icon(name="sign-in-alt")
           span ログイン
         button.Nav_Btn(v-else @click="signOut")
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'FooterNav',
@@ -48,6 +48,9 @@ export default {
       // どこをクリックしたか
       navClickContent: null
     }
+  },
+  computed: {
+    ...mapGetters(['oauth'])
   },
   methods: {
     // actions参照

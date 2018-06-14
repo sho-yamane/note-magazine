@@ -1,36 +1,32 @@
 <template lang="pug">
   .SudampList
     // gettersで取得したvotesでfor文をまわす
-    .SudampList_Elem(v-for="(vote, key) in votes" :key="key")
+    .SudampList_Elem(v-for="(v, key) in votes" :key="key")
       // +1をしているのはidが0-23だが見せ方の番号1-24のため
       .SudampList_ElemNo {{key + 1}}
       // 画像のURL
       img(:src="`/static/sudamp/line_sudamp_01_${key}-1.jpg`")
       .SudampList_VoteNum
         // 投票数をだす
-        span(:id="`js-voteNum-${key}`") {{vote.num}}
+        span(:id="`js-voteNum-${key}`") {{v.num}}
         span.SudampList_VoteNumUnit 票
       // 投票ステータスがtrueで投票済の場合
-      button.SudampList_VoteBtn._disable(v-if="$store.state.vote.status")
-        span(v-if="$store.state.vote.id === key") 本日投票済
+      button.SudampList_VoteBtn._disable(v-if="vote.status")
+        span(v-if="vote.id === key") 本日投票済
         span(v-else) -
       // 投票していなくてログインしている場合
-      button.SudampList_VoteBtn._active(v-else-if="!$store.state.vote.status && $store.state.oauth.login" @click="postVote({voteId: key, uid: $store.state.user.uid})") 投票する
+      button.SudampList_VoteBtn._active(v-else-if="!vote.status && oauth.login" @click="postVote({voteId: key, uid: $store.state.user.uid})") 投票する
       // 投票していなくてログインしていない場合
-      button.SudampList_VoteBtn._login(v-else-if="!$store.state.vote.status && !$store.state.oauth.login" @click="signIn") ログインして投票
+      button.SudampList_VoteBtn._login(v-else-if="!vote.status && !oauth.login" @click="signIn") ログインして投票
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'SudampList',
-  data () {
-    return {
-    }
-  },
   computed: {
     // computedにしているのはFirebaseがリアルタイム同期なので都度ブラウザにもその情報が反映されるように
-    ...mapGetters(['votes'])
+    ...mapGetters(['votes', 'vote', 'oauth'])
   },
   mounted () {
     // Firebaseのvotesテーブルから情報を取得。

@@ -8,15 +8,18 @@
       // LINEストさへのリンク
       a.Description_btn._line(href="https://store.line.me/stickershop/product/1357769" target="_blank") スダンプを買う
       // ログインしてなかったらログインボタン
-      button.Description_btn._login(v-if="!$store.state.oauth.login" @click="signIn") ログイン
+      button.Description_btn._login(v-if="!oauth.login" @click="signIn") ログイン
       // ログインしてたらログアウトボタン
       button.Description_btn._logout(v-else @click="signOut") ログアウト
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Description',
+  computed: {
+    ...mapGetters(['oauth'])
+  },
   methods: {
     // actions参照
     ...mapActions(['signIn', 'signOut'])

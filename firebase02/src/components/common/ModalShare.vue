@@ -1,6 +1,6 @@
 <template lang="pug">
   // 投票すると$store.state.modal.shareをtrueにするので._activeがaddされる
-  .ModalShare(:class="{_active: $store.state.modal.share}")
+  .ModalShare(:class="{_active: modal.share}")
     // maskとcloseボタンどっちクリックしても閉じるようにする
     .ModalShare_Mask(@click="clickClose")
     .ModalShare_Close(@click="clickClose")
@@ -20,12 +20,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'ModalShare',
   data () {
     return {
       shareUrl: location.href
     }
+  },
+  computed: {
+    ...mapGetters(['modal'])
   },
   methods: {
     clickClose () {

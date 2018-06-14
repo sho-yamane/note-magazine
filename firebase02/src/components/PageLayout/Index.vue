@@ -3,14 +3,14 @@
     // .Loadingを消す場合のアニメーション対応（css参照）
     transition(name="fade01")
       // loginCheck()が終わるまで待機
-      .Loading(v-if="$store.state.loading")
+      .Loading(v-if="loading")
         p
           // "Loading"というテキストを一文字ずつspanに入れる（アニメーション対応）
           span(v-for="txt in 'Loading'") {{txt}}
     // .Containerを出す場合のアニメーション対応（css参照）
     transition(name="fade02")
       // loginCheck()が終了したら表示
-      .Container(v-if="!$store.state.loading")
+      .Container(v-if="!loading")
         // ヘッダー
         global-header
         // ヘッダー下のリンクとログインボタン
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import SudampList from '../common/SudampList'
 import GlobalHeader from '../common/GlobalHeader'
 import Description from '../common/Description'
@@ -37,6 +37,9 @@ export default {
   data () {
     return {
     }
+  },
+  computed: {
+    ...mapGetters(['loading'])
   },
   mounted () {
     // 最初にログインチェック
