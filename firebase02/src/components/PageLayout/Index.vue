@@ -34,10 +34,6 @@ import ModalShare from '../common/ModalShare'
 export default {
   name: 'Index',
   components: {ModalShare, FooterNav, Description, GlobalHeader, SudampList},
-  data () {
-    return {
-    }
-  },
   computed: {
     ...mapGetters(['loading'])
   },
